@@ -1,16 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
-import {
-  Container,
-  Box,
-  Typography,
-  Button,
-  Grid,
-  Card,
-  CardContent,
-  CardMedia
-} from "@mui/material";
+import { Container, Box, Typography, Grid, Card, CardContent, CardMedia } from "@mui/material";
 
 // Define the types for the blog items
 interface BlogItem {
@@ -46,27 +36,35 @@ function Blog() {
 
   return (
     <Container maxWidth="xl" sx={{ mt: 10 }}>
-      <Box sx={{ textAlign: 'center', mt: 10 }}>
+      <Box sx={{ textAlign: 'center', mt: 10 }}> 
         <Typography variant="h4" component="h1">
-          What's poppin  <span style={{ color: "#ec407a" }}>PAU!</span>
+          Trending news <span style={{ color: "#ec407a" }}>🎉!</span>
         </Typography>
-        <Typography variant="body1" sx={{ mt: 3 }}>
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Porro, assumenda? Repellendus, iste corrupti? Tempore laudantium repellendus accusamus accusantium sed architecto odio, nisi expedita quas quidem nesciunt debitis dolore non aspernatur praesentium assumenda sint quibusdam, perspiciatis, explicabo sequi fugiat amet animi eos aut. Nobis quisquam reiciendis sunt quis sed magnam consequatur!
-        </Typography>
-        <Link to="/">
-          <Button variant="contained" color="secondary" sx={{ mt: 3 }}>
-            Back
-          </Button>
-        </Link>
       </Box>
 
-      <Grid container spacing={4} sx={{ mt: 3 }}>
+      <Box
+        sx={{
+          overflowX: 'auto',
+          display: 'flex',
+          whiteSpace: 'nowrap',
+          mt: 3,
+          pb: 3,
+          '&::-webkit-scrollbar': {
+            height: '10px',
+          },
+          '&::-webkit-scrollbar-thumb': {
+            backgroundColor: '#888',
+            borderRadius: '5px',
+          },
+          '&::-webkit-scrollbar-thumb:hover': {
+            backgroundColor: '#555',
+          },
+        }}
+      >
         {blogs.length > 0 ? (
           blogs.map((item) => (
-            <Grid item xs={12} md={3} key={item.id}>
+            <Box key={item.id} sx={{ display: 'inline-block', minWidth: '300px', pr: 2 }}>
               <Card sx={{ height: '100%', transition: 'transform 0.2s', '&:hover': { transform: 'scale(1.05)' }, backgroundColor: 'background.paper' }}>
-                
-                
                 {item.image && (
                   <CardMedia
                     component="img"
@@ -75,7 +73,6 @@ function Blog() {
                     sx={{ height: 140 }}
                   />
                 )}
-
 
                 <CardContent>
                   <Typography gutterBottom variant="h5" component="div">
@@ -88,17 +85,15 @@ function Blog() {
                     Date: {item.date}
                   </Typography>
                 </CardContent>
-
-
               </Card>
-            </Grid>
+            </Box>
           ))
         ) : (
           <Typography variant="h6" sx={{ mt: 3 }}>
             No blogs available.
           </Typography>
         )}
-      </Grid>
+      </Box>
     </Container>
   );
 }

@@ -1,19 +1,21 @@
 import React from "react";
 import Navbar from "../components/homeComponents/Navbar";
-import Carousel from "../clubs/Carousel.tsx";
-import Club from "../components/clubComponents/Club.tsx";
+// import Carousel from "../clubs/Carousel.tsx";
+import Clubdetail from "../components/clubComponents/ClubDetails.tsx";
 import Footer from "../components/homeComponents/Footer";
-function Clubs() {
+
+function ClubDetail() {
   return (
     <>
       <Navbar />
-      <Carousel/>
+     
       <div className=" min-h-screen">
-        <Club />
+        <Clubdetail />
       </div>
+      
       <Footer />
     </>
   );
 }
 
-export default Clubs;
+export default ClubDetail;
