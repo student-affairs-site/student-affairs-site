@@ -12,13 +12,13 @@ import YouTubeIcon from "@mui/icons-material/YouTube";
 import FacebookIcon from "@mui/icons-material/Facebook";
 
 // Define the types for the club item
-interface ClubItem {
-  _id: string;
-  nameOfClub: string;
-  school: string;
-  description: string;
-  // Add more fields as necessary
-}
+interface BlogItem {
+    _id: string;
+    name: string;
+    news: number;
+    date: string;
+    image: string;
+  }
 
 const AUTH_HEADER = {
   headers: {
@@ -26,19 +26,19 @@ const AUTH_HEADER = {
   }
 };
 
-const ClubDetails: React.FC = () => {
+const BlogDetails: React.FC = () => {
   const { _id } = useParams<{ _id: string }>();
-  const [club, setClub] = useState<ClubItem | null>(null);
+  const [blog, setBlog] = useState<BlogItem | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const fetchClubDetails = async () => {
+    const fetchBlogDetails = async () => {
       try {
-        console.log(`Fetching details for club ID: ${_id}`);  // Log the ID
-        const res = await axios.get<ClubItem>(`http://localhost:4001/api/v1/club/${_id}`, AUTH_HEADER);
+        console.log(`Fetching details for blog ID: ${_id}`);  // Log the ID
+        const res = await axios.get<BlogItem>(`http://localhost:4001/api/v1/blog/${_id}`, AUTH_HEADER);
         console.log("Response data:", res.data);  // Log the response data
-        setClub(res.data);
+        setBlog(res.data);
         setLoading(false);
       } catch (error) {
         console.error("Error fetching club details:", error);
@@ -46,7 +46,7 @@ const ClubDetails: React.FC = () => {
         setLoading(false);
       }
     };
-    fetchClubDetails();
+    fetchBlogDetails();
   }, [_id]);
 
   if (loading) {
@@ -57,68 +57,47 @@ const ClubDetails: React.FC = () => {
     return <Typography>{error}</Typography>;
   }
 
-  if (!club) {
-    return <Typography>No club details available.</Typography>;
+  if (!blog) {
+    return <Typography>No blog details available.</Typography>;
   }
 
   return (
     <>
 
       <Container maxWidth="md" sx={{ mt: 5 }}>
-        {/* club details */}
+        {/* blog details */}
         <Box sx={{ textAlign: 'center', mb: 4 }}>
 
-          <img src="../../../public/assets/image.jpg" alt="Club Image" style={{ width: '100%', borderRadius: '8px' }} />
+          <img src={blog.image} alt="blog Image" style={{ width: '100%', borderRadius: '8px' }} />
 
           <Typography variant="h3" component="h1" sx={{ mt: 2 }}>
-            {club.nameOfClub}, {club.school}
+            {blog.name}
           </Typography>
 
           <Typography variant="body1" sx={{ mt: 2 }}>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            {blog.date}
           </Typography>
 
         </Box>
 
-        {/* executives */}
-        <Box sx={{ textAlign: 'center', mb: 4 }}>
-          <Typography variant="h4" component="h2" sx={{ mb: 2 }}>
-            Executives
-          </Typography>
-          <Grid container spacing={2} justifyContent="center">
-            {["President", "Vice President", "Secretary", "Treasurer"].map((title, index) => (
-              <Grid item xs={6} md={3} key={index}>
-                <Box sx={{ textAlign: 'center' }}>
-                  <Avatar sx={{ width: 80, height: 80, margin: '0 auto' }}>JD</Avatar>
-                  <Typography variant="h6" component="h3">
-                    John Doe
-                  </Typography>
-                  <Typography variant="subtitle1" color="textSecondary">
-                    {title}
-                  </Typography>
-                </Box>
-              </Grid>
-            ))}
-          </Grid>
-        </Box>
-        
+       
 
-        {/* more info */}
+        {/* more info
         <Box sx={{ textAlign: 'center', mb: 4 }}>
           <Card sx={{ height: '100%', transition: 'transform 0.2s', '&:hover': { transform: 'scale(1.05)' }, backgroundColor: 'background.paper' }}>
 
             <CardContent>
-              {/* text 1 */}
+              text 1
               <Typography gutterBottom variant="h5" component="div">
                 More Info
               </Typography>
 
-              {/*text 2  */}
+              text 2 
               <Typography variant="body2" color="text.secondary">
                 Meeting Time: ...to be gotten from db
               </Typography>
 
-              {/* social media icons */}
+              social media icons
               <Typography variant="body2" color="text.secondary">
                 <nav>
                   <Box sx={{ display: "flex", justifyContent: "center", gap: 2 }}>
@@ -139,7 +118,7 @@ const ClubDetails: React.FC = () => {
 
             </CardContent>
           </Card>
-        </Box>
+        </Box> */}
 
 
       </Container>
@@ -148,4 +127,4 @@ const ClubDetails: React.FC = () => {
   );
 };
 
-export default ClubDetails;
+export default BlogDetails;

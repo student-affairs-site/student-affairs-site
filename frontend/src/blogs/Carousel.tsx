@@ -4,9 +4,9 @@ import { Container, Box, Typography, Button, Grid } from "@mui/material";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
-import welcomeToPAU from "../../../public/images/welcome-to-pau.png"; // Replace with your actual image paths
-import guysChilling from "../../../public/images/guys-chilling.jpg"; // Replace with your actual image paths
-import people from "../../../public/images/chudi.png"; // Replace with your actual image paths
+import tic from "../../public/images/guys-chilling.jpg"; // Replace with your actual image paths
+import publicSpeaking from "../../public/images/guys-chilling.jpg"; // Replace with your actual image paths
+import sports from"../../public/images/guys-chilling.jpg";
 
 function Carousel() {
   const sliderSettings = {
@@ -23,19 +23,19 @@ function Carousel() {
 
   const slides = [
     {
-      background: welcomeToPAU,
+      background: tic,
       title: "DESIGN | CONSTRUCTION | DEVELOPMENT",
       description:
         "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Cumque nemo quas sequi dolorem iusto dolore similique saepe mollitia fugiat consectetur iste dolores eaque, magnam aspernatur, quam commodi reprehenderit asperiores quis.",
     },
     {
-      background: guysChilling,
+      background: publicSpeaking,
       title: "Bringing your designs to life...",
       description:
         "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Cumque nemo quas sequi dolorem iusto dolore similique saepe mollitia fugiat consectetur iste dolores eaque, magnam aspernatur, quam commodi reprehenderit asperiores quis.",
     },
     {
-      background: people,
+      background: sports,
       title: "From concept to design",
       description:
         "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Cumque nemo quas sequi dolorem iusto dolore similique saepe mollitia fugiat consectetur iste dolores eaque, magnam aspernatur, quam commodi reprehenderit asperiores quis.",
@@ -92,16 +92,12 @@ function Carousel() {
         ))}
       </Slider>
 
-      {/* short content */}
+      {/* short content
       <Box sx={{ textAlign: 'center', mt: 10 }}>
-        <Typography variant="h4" component="h1">
-          What's poppin <span style={{ color: "#ec407a" }}>PAU!!!</span>
-        </Typography>
         <Typography variant="body1" sx={{ mt: 3 }}>
           Lorem ipsum dolor sit, amet consectetur adipisicing elit. Porro, assumenda? Repellendus, iste corrupti? Tempore laudantium repellendus accusamus accusantium sed architecto odio, nisi expedita quas quidem nesciunt debitis dolore non aspernatur praesentium assumenda sint quibusdam, perspiciatis, explicabo sequi fugiat amet animi eos aut. Nobis quisquam reiciendis sunt quis sed magnam consequatur!
         </Typography>
-        
-      </Box>
+      </Box> */}
 
 
     </Container>
