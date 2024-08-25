@@ -1,47 +1,38 @@
-import { ChangeEvent, useState, FormEvent, MouseEvent } from 'react';
-import { Stack, Typography, TextField, InputAdornment, FormControl, InputLabel, OutlinedInput, IconButton, Button, Box } from '@mui/material';
+import { ChangeEvent, useState, FormEvent } from 'react';
+import { Stack, Typography, TextField, InputAdornment, Button, Box } from '@mui/material';
 import MailIcon from '@mui/icons-material/Mail';
-import LockIcon from '@mui/icons-material/Lock';
-import Visibility from '@mui/icons-material/Visibility';
-import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import Image from 'mui-image';
 import { AuthNavBar, Footer, Message } from '../../components';
 import { useNavigate } from 'react-router-dom';
 import useAuth from '../../context/authContext';
 import { disabled } from '../../context/theme';
 
-import loginSVG from '../../assets/svgs/login.svg';
+import resetSVG from '../../assets/svgs/reset-password.svg';
 
 
 
-const Login = () => {
+const ForgotPassword = () => {
 
     const navigate = useNavigate();
 
     const [formData, setFormData] = useState({
         email: '',
-        password: ''
     });
-
-    const [showPassword, setShowPassword] = useState(false);
 
     const [message, setMessage] = useState<string | null>(null);
     const [openState, setOpenState] = useState(false);
     const [mode, setMode] = useState("");
-    const { login } = useAuth();
+    const { forgotPassword } = useAuth();
 
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
         setFormData({ ...formData, [name]: value });
     };
-    const handleMouseDownPassword = (event: MouseEvent<HTMLButtonElement>) => {
-        event.preventDefault();
-    };
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         setMessage(null);
 
-        await login(formData.email, formData.password, setMessage, setMode, setOpenState);
+        await forgotPassword(formData.email, setMessage, setMode, setOpenState);
     };
 
     return (
@@ -66,7 +57,7 @@ const Login = () => {
             <Stack sx={{ flexDirection: { xs: "column-reverse", md: "row" }, justifyContent: "space-evenly", alignItems: "center" }} width={"100%"} >
                 <Stack component="form" onSubmit={handleSubmit} sx={{ width: { xs: "100%", sm: "400px" }, marginBottom: { xs: "75px" } }} gap={5} pl={1} pr={1}>
                     <Typography variant='h5' color={"primary"} fontFamily={"leckerli-one"} sx={{ textAlign: "center" }}>
-                        Hello there again!!!
+                        Forgot Password
                     </Typography>
 
                     <TextField
@@ -85,43 +76,9 @@ const Login = () => {
                         }}
                         required
                     />
-                    <FormControl variant="outlined">
-                        <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
-                        <OutlinedInput
-                            id="password"
-                            name="password"
-                            type={showPassword ? 'text' : 'password'}
-                            value={formData.password}
-                            onChange={handleChange}
-                            startAdornment={
-                                <InputAdornment position="start">
-                                    <IconButton edge="start">
-                                        <LockIcon />
-                                    </IconButton>
-                                </InputAdornment>
-                            }
-                            endAdornment={
-                                <InputAdornment position="end">
-                                    <IconButton
-                                        aria-label="toggle password visibility"
-                                        onClick={() => setShowPassword(!showPassword)}
-                                        onMouseDown={handleMouseDownPassword}
-                                        edge="end"
-                                    >
-                                        {showPassword ? <VisibilityOff /> : <Visibility />}
-                                    </IconButton>
-                                </InputAdornment>
-                            }
-                            label="Password"
-                        />
-                    </FormControl>
                     <Stack alignItems={"center"} width={"100%"} gap={1}>
                         <Button variant='contained' sx={{ textTransform: 'none', padding: "15px 0", width: "100%" }} type='submit'>
-                            Sign In
-                        </Button>
-
-                        <Button sx={{ textTransform: 'none', fontWeight: "400", fontSize: '12px', color: disabled, padding: 0 }} onClick={() => navigate("../forgot_password")}>
-                            Forgot Password
+                            Send new password
                         </Button>
 
                         <Typography variant='caption' color={disabled}>
@@ -136,7 +93,7 @@ const Login = () => {
                     </Stack>
                 </Stack>
                 <Box sx={{ flexGrow: 1, maxWidth: "500px" }} zIndex={1}>
-                    <Image src={loginSVG} style={{ height: "100%" }} />
+                    <Image src={resetSVG} style={{ height: "100%" }} />
                 </Box>
             </Stack>
             <Footer />
@@ -144,4 +101,4 @@ const Login = () => {
     );
 };
 
-export default Login;
+export default ForgotPassword;
