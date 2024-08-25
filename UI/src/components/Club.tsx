@@ -6,50 +6,53 @@ import {
   Card,
   CardContent,
   CardMedia,
-  Stack,
   Button
 } from "@mui/material";
 import Grid from '@mui/material/Unstable_Grid2';
 import useAuth from "../context/authContext";
 import { dark, disabled, grey } from "../context/theme";
-import dayjs from "dayjs";
 
-export interface BlogItem {
+export interface ClubItem {
   _id: string;
-  title: string;
-  author: string;
-  content: number;
-  date: string;
+  club_name: string;
   image: string;
-  read_count: number
+  about: string;
+  member_count: number;
+  meeting_time: string;
+  social_media_handles: {
+    handle: string;
+    url: string;
+  }[];
+  executives: {
+    full_name: string;
+    image: string;
+    post: string
+  }[]
 }
 
-const Blog = () => {
-  const [blogs, setBlogs] = useState<BlogItem[]>([]);
+const Club = () => {
+  const [clubs, setClubs] = useState<ClubItem[]>([]);
   const navigate = useNavigate();
 
   const { token } = useAuth();
 
   useEffect(() => {
-    const getBlogs = async () => {
+    const getClubs = async () => {
       try {
         const AUTH_HEADER = {
           headers: {
             Authorization: `Bearer ${token}`
           }
         };
-        const res = await axios.get<BlogItem[]>(`http://${import.meta.env.VITE_BACKEND_HOST}:${import.meta.env.VITE_BACKEND_PORT}/api/v1/blog`, AUTH_HEADER);
-        setBlogs(res.data);
+        const res = await axios.get<ClubItem[]>(`http://${import.meta.env.VITE_BACKEND_HOST}:${import.meta.env.VITE_BACKEND_PORT}/api/v1/club`, AUTH_HEADER);
+        setClubs(res.data);
       } catch (error) {
-        console.log("Error fetching blogs:", error);
+        console.log("Error fetching club details:", error);
       }
     };
 
-    getBlogs();
+    getClubs();
   }, [token]);
-
-
-  //component={Link} to={`/blog/${item._id}`}
   return (
     <Grid container spacing={3} width={'100%'} zIndex={1} position={'relative'} overflow={'visible'}
       sx={{
@@ -65,12 +68,12 @@ const Blog = () => {
           aspectRatio: "3/5",
           maxWidth: "350px",
           borderRadius: 5,
-          display: blogs.length > 0 ? "block" : "none"
+          display: clubs.length > 0 ? "block" : "none"
         }
       }}
     >
-      {blogs.length > 0 ? (
-        blogs.map((item) => {
+      {clubs.length > 0 ? (
+        clubs.map((item) => {
           return (
             (
               <Grid xs={12} sm={6} md={4} key={item._id}>
@@ -82,60 +85,44 @@ const Blog = () => {
                     paddingX: { xs: 1.5, md: 2.5 },
                     paddingY: { xs: 1, md: 2 },
                     borderRadius: 3,
-                    aspectRatio: "1/1.36",
+                    aspectRatio: "1/1.35",
                     display: 'flex',
                     flexDirection: "column",
                   }}
                   color={dark}>
 
                   <Typography gutterBottom variant="caption" mb={1} color={disabled}>
-                    {item.title ?? 'No Blog Name'}
+                    {item.club_name ?? 'No Name provided'}
                   </Typography>
 
                   {item.image && (
                     <CardMedia
                       component="img"
                       image={item.image}
-                      alt={item.title}
+                      alt={item.club_name}
                       sx={{ borderRadius: 3, aspectRatio: "9/5" }}
                     />
                   )}
                   <CardContent sx={{ paddingX: 0, flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
 
-                    <Typography variant="body1" component="div" textTransform={'capitalize'} fontWeight={400}>
-                      {item.title ?? 'No Blog Name'}
-                    </Typography>
-
-                    <Typography gutterBottom variant="body2" component="div" sx={{
+                    <Typography variant="body2" component="div" sx={{
                       display: '-webkit-box',
-                      WebkitLineClamp: { xs: 1, sm: 3 },
+                      WebkitLineClamp: { xs: 2, sm: 3 },
                       WebkitBoxOrient: 'vertical',
                       overflow: 'hidden',
                       textOverflow: 'ellipsis',
                     }} mt={1}>
-                      {item.content ?? 'No Blog Content Available'}
+                      {item.about ?? 'No about'}
                     </Typography>
 
-                    <Stack sx={{ mt: 'auto', gap: 2 }}>
+                    <Button
 
-                      <Stack justifyContent={'space-between'} direction={'row'}>
-                        <Typography variant="caption" color="text.secondary">
-                          News Count: {item.read_count}
-                        </Typography>
-                        <Typography variant="caption" color="text.secondary">
-                          Date: {dayjs(item.date).format("DD MMM YYYY")}
-                        </Typography>
-                      </Stack>
-
-                      <Button
-                        variant="outlined"
-                        sx={{ width: '100%', borderColor: 'secondary.main', textTransform: "none", paddingY: 1, fontWeight: 300 }}
-                        onClick={() => navigate(`/blogs/${item._id}`, { replace: true })}
-                      >
-                        Read More
-                      </Button>
-
-                    </Stack>
+                      variant="outlined"
+                      sx={{ width: '100%', borderColor: 'secondary.main', textTransform: "none", paddingY: 1, fontWeight: 300, marginTop: 'auto' }}
+                      onClick={() => navigate(`/clubs/${item._id}`, { replace: true, state: { club: item } })}
+                    >
+                      More Info
+                    </Button>
 
                   </CardContent>
 
@@ -155,4 +142,4 @@ const Blog = () => {
   );
 }
 
-export default Blog;
+export default Club;
