@@ -1,11 +1,13 @@
 import { AppBar, styled, Toolbar, Box, Button, Stack, Menu, MenuItem } from '@mui/material';
+import { Image } from 'mui-image'
+import React from 'react';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import { useNavigate } from 'react-router-dom';
-import { grey } from '../context/theme';
+import { grey, primary } from '../context/theme';
 
 import PAULogo from '../assets/images/transparent-pau-logo.png';
-import { useState } from 'react';
+import DefaultUser from '../assets/svgs/default-user.svg';
 
 const StyledToolBar = styled(Toolbar)({
     display: "flex",
@@ -22,7 +24,7 @@ interface NavBarProps {
     route: string;
 }
 
-const NavBar: React.FC<NavBarProps> = ({ route }) => {
+const AdminNavBar: React.FC<NavBarProps> = ({ route }) => {
     const navigate = useNavigate();
 
     const handleNavigation = (path: string) => {
@@ -30,7 +32,7 @@ const NavBar: React.FC<NavBarProps> = ({ route }) => {
         handleClose();
     };
 
-    const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+    const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
     const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
         setAnchorEl(event.currentTarget);
@@ -39,7 +41,7 @@ const NavBar: React.FC<NavBarProps> = ({ route }) => {
         setAnchorEl(null);
     };
     return (
-        <AppBar position="fixed" sx={{ backgroundColor: grey, boxShadow: "none", padding: "10px 10px" }}>
+        <AppBar position="fixed" sx={{ backgroundColor: primary, boxShadow: "none", padding: "10px 10px" }}>
             <StyledToolBar sx={{ padding: 0 }}>
                 <Box
                     sx={{ width: { xs: "125px", md: "150px", lg: "175px" }, height: "100%" }}
@@ -55,7 +57,7 @@ const NavBar: React.FC<NavBarProps> = ({ route }) => {
                         aria-expanded={open ? 'true' : undefined}
                         onClick={handleClick}
                         endIcon={open ? <ExpandLessIcon /> : <ExpandMoreIcon />}
-                        sx={{ textTransform: "none" }}
+                        sx={{ textTransform: "none", color: grey }}
                     >
                         {route}
                     </Button>
@@ -81,6 +83,9 @@ const NavBar: React.FC<NavBarProps> = ({ route }) => {
                             mentor!
                         </StyledMenuItem>
                     </Menu>
+                    <Box sx={{ width: "35px" }}>
+                        <Image src={DefaultUser} style={{ height: "100%" }} />
+                    </Box>
                 </Stack>
 
 
@@ -90,4 +95,4 @@ const NavBar: React.FC<NavBarProps> = ({ route }) => {
     )
 }
 
-export default NavBar
+export default AdminNavBar
